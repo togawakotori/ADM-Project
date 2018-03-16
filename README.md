@@ -1,4 +1,5 @@
 # hello-world
 Hello world!
 
-watashi ha togawa kotori desu
+mpicc *.c -o *
+mpiexec -n 16 ./*
