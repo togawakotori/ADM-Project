@@ -3,3 +3,5 @@
 然后交换生成的公钥到对方authorized_keys中
 
 SSH免密登录实现
+
+http://blog.csdn.net/bendanban/article/details/9136755
