@@ -1,7 +1,9 @@
-首先在两台电脑上建立名字一样的用户
+# SSH免密登录实现
 
-然后交换生成的公钥到对方authorized_keys中
+首先在两台电脑上建立**名字一样**的用户
 
-SSH免密登录实现
+然后交换生成的**公钥**到对方authorized_keys中
+
+-------------------------
 
 http://blog.csdn.net/bendanban/article/details/9136755
