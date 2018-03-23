@@ -6,4 +6,12 @@ SSH免密登录实现
 
 -------------------------
 
+共享文件夹
+
+gedit /etc/exports
+/mirror *(rw,sync)
+
+
 http://blog.csdn.net/bendanban/article/details/9136755
+
+http://blog.sina.cn/dpool/blog/s/blog_4e8bda0c0102vqfx.html
