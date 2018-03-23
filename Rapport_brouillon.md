@@ -1,10 +1,12 @@
 https://www.acm.org/publications/proceedings-template-16dec2016
 ---------------
 # MPI Hello World
-## How to run?
+## How to run the program on different hosts?
+### SSH Connection
+### File Share System
 
 ## Analysis
-
+### Hosts number
 
 # Calculate Pi
 ## Principle
