@@ -9,7 +9,8 @@ SSH免密登录实现
 共享文件夹
 
 gedit /etc/exports
-/mirror *(rw,sync)
+
+/mirror \*(rw,sync)
 
 
 http://blog.csdn.net/bendanban/article/details/9136755
