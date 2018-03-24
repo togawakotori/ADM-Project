@@ -7,7 +7,29 @@ Please download the folder directly.
 **Compile the .tex file with other three files**
 
 ------------------------------
+SSH Connection
 
+首先在两台电脑上建立名字一样的用户
+
+然后交换生成的公钥到对方authorized_keys中
+
+------------------------------
+
+Sharing a Folder
+
+gedit /etc/exports
+
+/mirror *(rw,sync)
+
+-------------------------------
+
+More Details:
+
+http://blog.csdn.net/bendanban/article/details/9136755
+
+http://blog.sina.cn/dpool/blog/s/blog_4e8bda0c0102vqfx.html
+
+-------------------------------
 How to compile?
 
 mpicc *.c -o *
