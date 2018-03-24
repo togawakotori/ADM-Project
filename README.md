@@ -1,5 +1,13 @@
 ------------------------------
 
+Template for LaTeX has been uploaded.
+
+Please download the folder directly.
+
+**Compile the .tex file with other three files**
+
+------------------------------
+
 How to compile?
 
 mpicc *.c -o *
@@ -8,7 +16,7 @@ mpiexec -n 16 ./*
 
 ------------------------------
 
-Hello_world.c can be used as a template.
+Hello_world.c can be used as a template for programming
 
 ------------------------------
 
