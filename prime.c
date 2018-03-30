@@ -1,5 +1,5 @@
 #include <mpi.h>
-#include <math.h>
+#include <math.h>// To compile with math.h use: mpicc prime.c -o prime -lm
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -43,7 +43,9 @@ int low_value = 2+BLOCK_LOW(id,p,n-1);//interval for one process
 int high_value = 2+BLOCK_HIGH(id,p,n-1);
 //printf("INTERVAL %d~%d\n",low_value,high_value);
  
-if ((2+BLOCK_LOW(1,p,n-1))*(2+BLOCK_LOW(1,p,n-1))<n){//BLOCK_LOW(1,p,n-1) Size of Process 0
+//if ((2+BLOCK_LOW(1,p,n-1))*(2+BLOCK_LOW(1,p,n-1))<n){
+if (2+BLOCK_LOW(1,p,n-1)<(int)sqrt((double)n)){
+//BLOCK_LOW(1,p,n-1) Size of Process 0
    if (!id) {printf("TOO MANY PROCESS\n");fflush(stdout);}
    MPI_Finalize();
    exit(1);
