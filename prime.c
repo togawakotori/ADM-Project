@@ -32,6 +32,13 @@ if (argc!=2){
 }
 n = atoi(argv[1]);
 
+  int len;
+  char name[MPI_MAX_PROCESSOR_NAME];
+  MPI_Get_processor_name(name,&len);
+  printf("Hello world from process %d of %d on %s\n",id,p,name);
+  fflush(stdout);
+
+
 int low_value = 2+BLOCK_LOW(id,p,n-1);//interval for one process
 int high_value = 2+BLOCK_HIGH(id,p,n-1);
 //printf("INTERVAL %d~%d\n",low_value,high_value);
