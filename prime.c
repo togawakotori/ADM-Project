@@ -3,11 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BLOCK_LOW(id,p,n) (id*n)/p
+#define MIN(a,b) (a<b?a:b)
+#define MAX(a,b) (a<b?b:a)
+#define BLOCK_LOW(id,p,n) MAX((id*n)/p,0)//this expression replaces (id*n)/p to fix a serious bug: while p=1, BLOCK_LOW=-1.
 #define BLOCK_HIGH(id,p,n) (BLOCK_LOW((id+1),p,n)-1)
 #define BLOCK_SIZE(id,p,n) (BLOCK_LOW((id+1),p,n)-BLOCK_LOW(id,p,n))
 #define BLOCK_OWNER(index,p,n) (p*(index+1)-1)/n 
-#define MIN(a,b) (a<b?a:b)
+
 #define VERSION 1//-v
 
 int main(int argc, char* argv[]){
@@ -71,16 +73,21 @@ do {
         else first = prime-(low_value%prime);//eg.prime=5, low_value=31, first=4
     }
    
-   for (i=first;i<BLOCK_SIZE(id,p,n-1);i+=prime) marked[i]=1;//not prime
-
-   if (!id){while (marked[++index]);prime=index+2;}//Process 0 find next prime
+   for (i=first;i<BLOCK_SIZE(id,p,n-1);i+=prime){ marked[i]=1;//not prime
+  
+  // if ((prime==2)&&(p==1)) printf("%d %d %d %d\n",(int)0/1,BLOCK_LOW(id,p,n-1),first,i);
+}
+   if (!id){while (marked[++index]);prime=index+2;
+//printf("%d\n",prime);
+}//Process 0 find next prime
+ 
    MPI_Bcast(&prime,1,MPI_INT,0,MPI_COMM_WORLD);//and Broadcast to all processes
 
 }while (prime*prime<=n);
 
 local_count=0;
 for (i=0;i<BLOCK_SIZE(id,p,n-1);i++) if (!marked[i]) local_count++;
-
+//printf("%d\n",local_count);
 MPI_Reduce(&local_count,&global_count,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
 
 elapsed_time+=MPI_Wtime();
