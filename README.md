@@ -1,13 +1,14 @@
+0402
+修正了Comm_size==1时的严重bug
+发布了过滤2、3、5倍数的版本(prime5.c)
+
 ---------------------------
 
-來週也要drop~drop~到FTP上哦，務必
+來週也要drop\~drop\~到FTP上哦，務必
 
 ---------------------------
-Ad:
 
-Juno + Mircosoft Azure Network 
-
-擺脫電腦 在IPAD上運行JUPYTER NOTEBOOK
+Juno + Mircosoft Azure Network: 擺脫電腦 在IPAD上運行JUPYTER NOTEBOOK
 
 ---------------------------
 尋找質數
