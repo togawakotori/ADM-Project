@@ -10,6 +10,8 @@ ADM Project 3: 2018/04/15
 
 **置頂**: 來週也要 **Drop\~Drop\~** 到FTP上哦，務必
 
+2018/04/05: 準備開始用另一種方法編寫去除偶數的方法！**New!**
+
 2018/04/05: 維護了Readme.md -_-|||
 
 2018/04/03: Juno + Mircosoft Azure Network: 擺脫電腦 在IPAD上運行JUPYTER NOTEBOOK
@@ -18,12 +20,7 @@ ADM Project 3: 2018/04/15
 
 2018/??/??: Template for LaTeX has been uploaded. Please download the folder directly. **Compile the .tex file with other three files**
 
-------------------------------
-SSH Connection
-
-首先在两台电脑上建立名字一样的用户
-
-然后交换生成的公钥到对方authorized_keys中
+2018/??/??: 如何建立免密的SSH Connection: 首先在两台电脑上建立名字一样的用户, 然后交换生成的公钥到对方authorized_keys中.
 
 ------------------------------
 
