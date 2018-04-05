@@ -79,7 +79,8 @@ do {
         if (low_value%prime==0) first = 0;//eg.prime=5, low_value=30, first=0
         else first = prime-(low_value%prime);//eg.prime=5, low_value=31, first=4
     }
-   //printf("FIRST %d\n",first);
+   if ((first+low_value)%2==0) first=first+prime;// to promise "first" is an odd number
+ //  printf("PRIME %d LOW %d FIRST %d\n",prime,low_value,first);
    for (i=first;i<2*BLOCK_SIZE(id,p,n);i+=2*prime){marked[(i)/2]=1;//not prime
 //3,5,7,9,11,13,15,17,19
 //0,1,2,3,4, 5, 6, 7, 8
