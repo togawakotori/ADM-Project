@@ -1,24 +1,22 @@
-2018/04/02
+--------------------------
+**Deadline預警**
 
-修正了Comm_size==1时的严重bug
+ADM Project 2: 2018/04/08
 
-发布了过滤2、3、5倍数的版本(prime5.c)
+ADM Project 3: 2018/04/15
 
----------------------------
+--------------------------
+**留言板**
 
-來週也要 **Drop\~Drop\~** 到FTP上哦，務必
+**置頂**: 來週也要 **Drop\~Drop\~** 到FTP上哦，務必
 
----------------------------
+2018/04/05: 維護了Readme.md -_-|||
 
-Juno + Mircosoft Azure Network: 擺脫電腦 在IPAD上運行JUPYTER NOTEBOOK
+2018/04/03: Juno + Mircosoft Azure Network: 擺脫電腦 在IPAD上運行JUPYTER NOTEBOOK
 
------------------------------
+2018/04/02: 修正了Comm_size==1时的严重bug; 发布了过滤2、3、5倍数的版本(prime5.c)
 
-Template for LaTeX has been uploaded.
-
-Please download the folder directly.
-
-**Compile the .tex file with other three files**
+2018/??/??: Template for LaTeX has been uploaded. Please download the folder directly. **Compile the .tex file with other three files**
 
 ------------------------------
 SSH Connection
