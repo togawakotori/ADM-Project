@@ -100,6 +100,8 @@ MPI_Reduce(&local_count,&global_count,1,MPI_INT,MPI_SUM,0,MPI_COMM_WORLD);
 
 elapsed_time+=MPI_Wtime();
 if (!id){
+if (n0<=1) global_count = -2;//treat the special case, n<=1
+if (n0==2) global_count = -1;//treat the special case, n=2
 global_count=global_count+2;//count 2,3
 printf("%d PRIMES ARE <= %d\n",global_count,n0);fflush(stdout);
 printf("EXECUTION TIME (s): %10.6f\n",elapsed_time);fflush(stdout);
@@ -130,4 +132,3 @@ void SayHello(int id, int p){
   printf("Hello world from process %d of %d on %s\n",id,p,name);
   fflush(stdout);
 }
-
