@@ -12,6 +12,8 @@
 
 #define VERSION 3//-v
 
+void SayHello(int,int,int,int);
+
 int main(int argc, char* argv[]){
 
 double elapsed_time;
@@ -41,17 +43,14 @@ int n0= n;// backup of n
 if (n%2==0) {n=(n-1)/2;}
        else {n=n/2;}
  
-  int len;
-  char name[MPI_MAX_PROCESSOR_NAME];
-  MPI_Get_processor_name(name,&len);
-  printf("Hello world from process %d of %d on %s\n",id,p,name);
-  fflush(stdout);
+
 
 
 int low_value = 3+2*BLOCK_LOW(id,p,n);//interval for one process, here n is the number of prime from 3 to n0;
 int high_value = 3+2*BLOCK_HIGH(id,p,n);
-//printf("INTERVAL %d~%d\n",low_value,high_value);
- 
+
+SayHello(id,p,low_value,high_value);
+
 //if ((2+BLOCK_LOW(1,p,n-1))*(2+BLOCK_LOW(1,p,n-1))<n){
 if (3+2*BLOCK_LOW(1,p,n)<(int)sqrt((double)n0)){
 //BLOCK_LOW(1,p,n-1) Size of Process 0
@@ -110,4 +109,11 @@ printf("EXECUTION TIME (s): %10.6f\n",elapsed_time);fflush(stdout);
 
  MPI_Finalize();
  return 0;
+}
+void SayHello(int id, int p,int low_value, int high_value){
+  int len;
+  char name[MPI_MAX_PROCESSOR_NAME];
+  MPI_Get_processor_name(name,&len);
+  printf("PROCESS %d/%d INTERVAL %d~%d ON %s\n",id,p,low_value,high_value,name);
+  fflush(stdout);
 }
