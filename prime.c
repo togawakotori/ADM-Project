@@ -12,6 +12,8 @@
 
 #define VERSION 1//-v
 
+void SayHello(int,int,int,int);
+
 int main(int argc, char* argv[]){
 
 double elapsed_time;
@@ -34,16 +36,9 @@ if (argc!=2){
 }
 n = atoi(argv[1]);
 
-  int len;
-  char name[MPI_MAX_PROCESSOR_NAME];
-  MPI_Get_processor_name(name,&len);
-  printf("Hello world from process %d of %d on %s\n",id,p,name);
-  fflush(stdout);
-
-
 int low_value = 2+BLOCK_LOW(id,p,n-1);//interval for one process
 int high_value = 2+BLOCK_HIGH(id,p,n-1);
-//printf("INTERVAL %d~%d\n",low_value,high_value);
+SayHello(id,p,low_value,high_value); 
  
 //if ((2+BLOCK_LOW(1,p,n-1))*(2+BLOCK_LOW(1,p,n-1))<n){
 if (2+BLOCK_LOW(1,p,n-1)<(int)sqrt((double)n)){
@@ -101,3 +96,11 @@ printf("EXECUTION TIME (s): %10.6f\n",elapsed_time);fflush(stdout);
  MPI_Finalize();
  return 0;
 }
+void SayHello(int id, int p,int low_value, int high_value){
+  int len;
+  char name[MPI_MAX_PROCESSOR_NAME];
+  MPI_Get_processor_name(name,&len);
+  printf("PROCESS %d/%d INTERVAL %d~%d ON %s\n",id,p,low_value,high_value,name);
+  fflush(stdout);
+}
+
