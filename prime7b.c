@@ -14,7 +14,7 @@
 
 int NumberOfTest(int);
 int RecoverNumber(int);
-void SayHello(int,int);
+void SayHello(int,int,int,int);
 int FindNext(int);
 
 int main(int argc, char* argv[]){
@@ -42,14 +42,11 @@ int n0= n;// backup of n
  
 n=NumberOfTest(n);
 
-//printf("N=%d\n",RecoverNumber(n-1));
-
-//SayHello(id,p);
-
 int low_value  = RecoverNumber(BLOCK_LOW(id,p,n));//interval for one process 
 int high_value = RecoverNumber(BLOCK_HIGH(id,p,n));
-printf("PROCESS %d/%d INTERVAL %d~%d\n",id,p,low_value,high_value);
- 
+
+SayHello(id,p,low_value,high_value);
+
 if (RecoverNumber(BLOCK_LOW(1,p,n))<(int)sqrt((double)n0)){//Size of Process 0 < sqrt(n0) ?
    if (!id) {printf("TOO MANY PROCESS\n");fflush(stdout);}
    MPI_Finalize();
@@ -106,7 +103,6 @@ global_count=global_count+4;//count 2,3,5,7
 printf("%d PRIMES ARE <= %d\n",global_count,n0);fflush(stdout);
 printf("EXECUTION TIME (s): %10.6f\n",elapsed_time);fflush(stdout);
 }
- 
 
  MPI_Finalize();
  return 0;
@@ -121,11 +117,10 @@ int mask[]={11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,1
 int NumberOfTest(int n){return (48*(n/210)+add[n%210]);}
 int RecoverNumber(int n){return ((n/48)*210+mask[n%48]);}
 int FindNext(int n){if (n==1) return 10;else return (mask[add[n]]-n);}
-void SayHello(int id, int p){
+void SayHello(int id, int p,int low_value, int high_value){
   int len;
   char name[MPI_MAX_PROCESSOR_NAME];
   MPI_Get_processor_name(name,&len);
-  printf("Hello world from process %d of %d on %s\n",id,p,name);
+  printf("PROCESS %d/%d INTERVAL %d~%d ON %s\n",id,p,low_value,high_value,name);
   fflush(stdout);
 }
-
