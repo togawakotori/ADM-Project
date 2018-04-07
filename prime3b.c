@@ -14,7 +14,7 @@
 
 int NumberOfTest(int);
 int RecoverNumber(int);
-void SayHello(int,int);
+void SayHello(int,int,int,int);
 
 int main(int argc, char* argv[]){
 
@@ -51,7 +51,8 @@ n=NumberOfTest(n);
 
 int low_value  = RecoverNumber(BLOCK_LOW(id,p,n));//interval for one process 
 int high_value = RecoverNumber(BLOCK_HIGH(id,p,n));
-printf("PROCESS %d/%d INTERVAL %d~%d\n",id,p,low_value,high_value);
+//printf("PROCESS %d/%d INTERVAL %d~%d\n",id,p,low_value,high_value);
+SayHello(id,p,low_value,high_value);
  
 if (RecoverNumber(BLOCK_LOW(1,p,n))<(int)sqrt((double)n0)){//Size of Process 0 < sqrt(n0) ?
    if (!id) {printf("TOO MANY PROCESS\n");fflush(stdout);}
@@ -125,10 +126,10 @@ int RecoverNumber(int n){
 if (n%2==0) return (n/2)*6+5;
        else return ((n-1)/2)*6+7;//RecoverNumber(n-1)+2;           
 }
-void SayHello(int id, int p){
+void SayHello(int id, int p,int low_value, int high_value){
   int len;
   char name[MPI_MAX_PROCESSOR_NAME];
   MPI_Get_processor_name(name,&len);
-  printf("Hello world from process %d of %d on %s\n",id,p,name);
+  printf("PROCESS %d/%d INTERVAL %d~%d ON %s\n",id,p,low_value,high_value,name);
   fflush(stdout);
 }
