@@ -116,7 +116,7 @@ int mask[]={11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,1
 
 int NumberOfTest(int n){return (48*(n/210)+add[n%210]);}
 int RecoverNumber(int n){return ((n/48)*210+mask[n%48]);}
-int FindNext(int n){if (n==1) return 10;else return (mask[add[n]]-n);}
+int FindNext(int n){return (mask[add[n]]-n);}
 void SayHello(int id, int p,int low_value, int high_value){
   int len;
   char name[MPI_MAX_PROCESSOR_NAME];
