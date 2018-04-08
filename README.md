@@ -10,7 +10,11 @@ ADM Project 3: 2018/04/15
 
 **置頂**: 來週也要 **Drop\~Drop\~** 到FTP上哦，務必
 
-2018/04/06: 發佈了過濾2,3,5,7倍數的程序(prime7b.c)。**New!** 准备开始写报告
+2018/04/08: 交稿日臨近，緊張摸魚中。**New!**  
+
+2018/04/08: **特報** Octave竟然出了圖形界面
+
+2018/04/06: 發佈了過濾2,3,5,7倍數的程序(prime7b.c)。
 
 2018/04/05: 如何推廣至2357？
 
@@ -18,7 +22,7 @@ ADM Project 3: 2018/04/15
 
 2018/04/05: 維護了Readme.md -_-|||
 
-2018/04/03: Juno + Mircosoft Azure Network: 擺脫電腦 在IPAD上運行JUPYTER NOTEBOOK
+2018/04/03: **特報** Juno + Mircosoft Azure Network: 擺脫電腦 在IPAD上運行JUPYTER NOTEBOOK
 
 2018/04/02: 修正了Comm_size==1时的严重bug; 发布了过滤2、3、5倍数的版本(prime5.c)
 
