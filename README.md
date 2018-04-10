@@ -8,6 +8,14 @@ ADM Project 3: **2018/04/15**
 
 **置頂**: 來週也要 **Drop\~Drop\~** 到FTP上哦，務必
 
+2018/04/10: 編譯含靜態鏈接庫的文件
+          
+            mpicc -c MyMPI.c
+            
+            ar -rc MyMPI.a MyMPI.o
+            
+            mpicc matrix.c -o matrix ./MyMPI.a
+
 2018/04/08: 如何進行矩陣乘法？**New!**  
 
 2018/04/08: **特報** Octave竟然出了圖形界面
