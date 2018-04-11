@@ -11,10 +11,8 @@ ADM Project 3: **2018/04/15**
 2018/04/10: 編譯含靜態鏈接庫的文件
           
             mpicc -c MyMPI.c
-            
-            ar -rc MyMPI.a MyMPI.o
-            
-            mpicc matrix.c -o matrix ./MyMPI.a
+            ar -rc MyMPI.a MyMPI.o
+            mpicc matrix.c -o matrix ./MyMPI.a
 
 2018/04/08: 如何進行矩陣乘法？**New!**  
 
