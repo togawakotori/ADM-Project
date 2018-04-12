@@ -8,6 +8,8 @@ ADM Project 3: **2018/04/15**
 
 **置頂**: 來週也要 **Drop\~Drop\~** 到FTP上哦，務必
 
+2018/04/12: https://stackoverflow.com/questions/5104847/mpi-bcast-a-dynamic-2d-array
+
 2018/04/10: 編譯含靜態鏈接庫的文件
           
             mpicc -c MyMPI.c
