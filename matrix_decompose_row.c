@@ -67,8 +67,8 @@ for (i=0;i<m_a;i++){for (j=0;j<n_a;j++){printf("%f ", a[i][j]);}printf("\n");}//
 
 
 if (!id){
-a_local=a;
-for (i=1;i<p;i++) MPI_Send(&(a[low_value][0]),BLOCK_SIZE(i,p,m_a)*n_a,MPI_FLOAT,i,0,MPI_COMM_WORLD);
+for (i=0;i<BLOCK_SIZE(0,p,m_a);i++) for (j=0;j<n_a;j++) a_local[i][j]=a[i][j];
+for (i=1;i<p;i++) MPI_Send(&(a[BLOCK_LOW(i,p,m_a)][0]),BLOCK_SIZE(i,p,m_a)*n_a,MPI_FLOAT,i,0,MPI_COMM_WORLD);
 }
 else {
  MPI_Status status;
@@ -167,5 +167,3 @@ int malloc2dfloat(float ***array, int n, int m) {
 }
 
 int free2dfloat(float ***array) {free(&((*array)[0][0]));free(*array);return 0;}
-
-
