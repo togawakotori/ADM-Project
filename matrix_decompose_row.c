@@ -12,11 +12,13 @@
 #define BLOCK_SIZE(id,p,n) (BLOCK_LOW((id+1),p,n)-BLOCK_LOW(id,p,n))
 #define BLOCK_OWNER(index,p,n) (p*(index+1)-1)/n 
 
-#define VERSION 1//-v
+#define VERSION 2//-v
+#define MAX_PROCESS(x,y) (VERSION>=2?MIN(x,y):x)
 
 //#define DEBUG 1
 
 void SayHello(int,int,int,int);
+void mono(float **, int,int, float **,int,int);
 int malloc2dfloat(float ***,int,int);
 int free2dfloat(float ***);
 
@@ -25,7 +27,6 @@ int main(int argc, char* argv[])
 {
 double elapsed_time;
 int id,p;
-
 int m_a=0,n_a=0,m_b=0,n_b=0,i,j;
 
 MPI_Init(&argc, &argv);
@@ -34,12 +35,25 @@ elapsed_time = -MPI_Wtime();
 MPI_Comm_rank(MPI_COMM_WORLD,&id);
 MPI_Comm_size(MPI_COMM_WORLD,&p);
 
-
+if (!id) printf("VERSION %d\n",VERSION);
 FILE *fin;
-if (!id){fin=fopen("m.txt","r");fscanf(fin,"%d %d\n",&m_a,&n_a);}
+
+if (argc!=2){
+   if (!id) {printf("PLEASE INPUT COMMAND LINE: %s <FILE> \n",argv[0]);fflush(stdout);}
+   MPI_Finalize();
+   exit(1);
+}
+
+if (!id){fin=fopen(argv[1],"r");fscanf(fin,"%d %d\n",&m_a,&n_a);}
 
 MPI_Bcast(&m_a,1,MPI_INT,0,MPI_COMM_WORLD);
 MPI_Bcast(&n_a,1,MPI_INT,0,MPI_COMM_WORLD);
+
+if (MAX_PROCESS(m_a,n_a)<p) {  
+   if (!id) {printf("FATAL ERROR: TOO MANY PROCESS\n");fflush(stdout);fclose(fin);}
+   MPI_Finalize();
+   exit(1);
+}
 MPI_Barrier(MPI_COMM_WORLD);
 
 int low_value  = BLOCK_LOW(id,p,m_a);//interval for one process 
@@ -84,9 +98,16 @@ for (i=0;i<BLOCK_SIZE(id,p,m_a);i++){for (j=0;j<n_a;j++){printf("%f ", a_local[i
 
 if (!id){fscanf(fin,"\n"); fscanf(fin,"%d %d\n",&m_b,&n_b);}
 
+
 MPI_Bcast(&m_b,1,MPI_INT,0,MPI_COMM_WORLD);
 MPI_Bcast(&n_b,1,MPI_INT,0,MPI_COMM_WORLD);
-//MPI_Barrier(MPI_COMM_WORLD);
+ 
+if (MAX_PROCESS(MIN(m_a,n_a),MIN(m_b,n_b))<p) {  
+   if (!id) {printf("\nFATAL ERROR: TOO MANY PROCESS\n");fflush(stdout);fclose(fin);}
+   MPI_Finalize();
+   free2dfloat(&a);free2dfloat(&a_local);
+   exit(1);
+}
 
 float **b;malloc2dfloat(&b,m_b,n_b);
 float **c;malloc2dfloat(&c,m_a,n_b);
@@ -96,7 +117,12 @@ float **c_local;malloc2dfloat(&c_local,BLOCK_SIZE(id,p,m_a),n_b);
 printf("INFO B %d %d %d\n",id,m_b,n_b);
 #endif
 
-if (n_a!=m_b) { printf("ERROR!\n");fclose(fin);}
+if (n_a!=m_b) {  
+   if (!id) {printf("FATAL ERROR: N_A!=M_B\n");fflush(stdout);fclose(fin);}
+   MPI_Finalize();
+   free2dfloat(&a);free2dfloat(&b);free2dfloat(&c);free2dfloat(&a_local);free2dfloat(&c_local);
+   exit(1);
+}
 else 
 { 
 if(!id){for (i=0;i<m_b;i++)for (j=0;j<n_b;j++)fscanf(fin,"%f",&(b[i][j]));fclose(fin);}
@@ -136,8 +162,11 @@ if (!id) for (i=0;i<m_a;i++){for (j=0;j<n_b;j++){printf("%f ", c[i][j]);}printf(
 elapsed_time+=MPI_Wtime();
 if (!id) {printf("EXECUTION TIME (s): %10.6f\n",elapsed_time);fflush(stdout);}
 
- free2dfloat(&a);free2dfloat(&b);free2dfloat(&c);free2dfloat(&a_local);free2dfloat(&c_local);
  MPI_Finalize();
+#ifdef DEBUG
+if (!id) {printf("\nMONO\n");mono(a,m_a,n_a,b,m_b,n_b);}
+#endif
+ free2dfloat(&a);free2dfloat(&b);free2dfloat(&c);free2dfloat(&a_local);free2dfloat(&c_local);
  return 0;
 }
 
@@ -149,6 +178,20 @@ void SayHello(int id, int p,int low_value, int high_value){
   fflush(stdout);
 }
 
+void mono(float **a, int m_a,int n_a, float **b,int m_b,int n_b)
+{
+int i,j,k;
+float **c_mono;
+malloc2dfloat(&c_mono,m_a,n_b);
+for (i=0;i<m_a;i++)
+  for (j=0;j<n_b;j++)
+     c_mono[i][j]=0;
+for (i=0;i<m_a;i++)
+  for (j=0;j<n_b;j++)
+    for (k=0;k<n_a;k++)
+     c_mono[i][j]+=a[i][k]*b[k][j];
+for (i=0;i<m_a;i++){for (j=0;j<n_b;j++){printf("%f ", c_mono[i][j]);}printf("\n");}
+}
 
 int malloc2dfloat(float ***array, int n, int m) {    
     float *p = (float *)malloc(n*m*sizeof(float));
