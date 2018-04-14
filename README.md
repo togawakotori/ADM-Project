@@ -8,7 +8,9 @@ ADM Project 3: **2018/04/15**
 
 **置頂**: 來週也要 **Drop\~Drop\~** 到FTP上哦，務必
 
-2018/04/12： 发布了最基本的matrix multiplication版本
+2018/04/14: 準備開始寫Cannon
+
+2018/04/12：发布了最基本的matrix multiplication版本
 
 2018/04/12: https://stackoverflow.com/questions/5104847/mpi-bcast-a-dynamic-2d-array
 
