@@ -49,7 +49,7 @@ if (!id){fin=fopen(argv[1],"r");fscanf(fin,"%d %d\n",&m_a,&n_a);}
 
 MPI_Bcast(&m_a,1,MPI_INT,0,MPI_COMM_WORLD);
 MPI_Bcast(&n_a,1,MPI_INT,0,MPI_COMM_WORLD);
-MPI_Barrier(MPI_COMM_WORLD); 
+//MPI_Barrier(MPI_COMM_WORLD); 
 
 if (MIN(m_a,n_a)<p_sqrt) {  
    if (!id) {printf("FATAL ERROR: TOO MANY PROCESS\n");fflush(stdout);fclose(fin);}
@@ -77,7 +77,7 @@ if (!id){fscanf(fin,"\n"); fscanf(fin,"%d %d\n",&m_b,&n_b);}
 
 MPI_Bcast(&m_b,1,MPI_INT,0,MPI_COMM_WORLD);
 MPI_Bcast(&n_b,1,MPI_INT,0,MPI_COMM_WORLD);
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
  
 if (n_a!=m_b) {  
    if (!id) {printf("FATAL ERROR: N_A!=M_B\n");fflush(stdout);fclose(fin);}
@@ -130,7 +130,7 @@ else {
  MPI_Recv(&b_chip[0][0],BLOCK_SIZE((int)id/p_sqrt,p_sqrt,m_b)*BLOCK_SIZE(id%p_sqrt,p_sqrt,n_b),MPI_FLOAT,0,0,MPI_COMM_WORLD,&status);
 }
 
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
 
 float **res;
 malloc2dfloat(&res,BLOCK_SIZE((int)id/p_sqrt,p_sqrt,m_a),BLOCK_SIZE(id%p_sqrt,p_sqrt,n_b));
@@ -149,7 +149,7 @@ int x_b=(int)id/p_sqrt;int y_b=id%p_sqrt;
 
 for (k=1;k<=p_sqrt;k++){//ROUND k
  
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
 //ADDR
 int vien_a=x_0*p_sqrt+(y_0+(k==1?x_0:1))%p_sqrt;//from
 int arrv_a=x_0*p_sqrt+(y_0+p_sqrt-(k==1?x_0:1))%p_sqrt;//to
@@ -180,16 +180,16 @@ float **recv_buf_a;malloc2dfloat(&recv_buf_a, recv_m_a,recv_n_a);
 
 float **recv_buf_b;malloc2dfloat(&recv_buf_b, recv_m_b,recv_n_b);
 
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
 MPI_Status status; 
  
 //if ((arrv_a!=curr_a)&&(curr_a!=vien_a)) 
 MPI_Sendrecv(&a_chip[0][0],send_m_a*send_n_a,MPI_FLOAT,arrv_a,0,&recv_buf_a[0][0],recv_m_a*recv_n_a,MPI_FLOAT,vien_a,0,MPI_COMM_WORLD,&status);
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
 
 //if ((arrv_b!=curr_b)&&(curr_b!=vien_b)) 
 MPI_Sendrecv(&b_chip[0][0],send_m_b*send_n_b,MPI_FLOAT,arrv_b,0,&recv_buf_b[0][0],recv_m_b*recv_n_b,MPI_FLOAT,vien_b,0,MPI_COMM_WORLD,&status);
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
 
 //if (arrv_a!=vien_a){ 
 free2dfloat(&a_chip);
@@ -203,13 +203,13 @@ malloc2dfloat(&b_chip,recv_m_b,recv_n_b);
 for (i=0;i<recv_m_b;i++) for (j=0;j<recv_n_b;j++) b_chip[i][j]=recv_buf_b[i][j];
 //}
 
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
 //
 float **res_test;malloc2dfloat(&res_test,recv_m_a,recv_n_b);
 
 mono(&a_chip,recv_m_a,recv_n_a,&b_chip,recv_m_b,recv_n_b,&res);
 
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
 //for (i=0;i<recv_m_a;i++) for (j=0;j<recv_n_b;j++) res[i][j]+=res_test[i][j];
 //printf("~ROUND %d ID %d~\n",k,id);
 free2dfloat(&recv_buf_a);
@@ -233,7 +233,7 @@ for (i=1;i<p;i++)
 MPI_Recv(&c_buffer[i][0][0],BLOCK_SIZE((int)i/p_sqrt,p_sqrt,m_a)*BLOCK_SIZE(i%p_sqrt,p_sqrt,n_b),MPI_FLOAT,i,0,MPI_COMM_WORLD,&status);
 }
 
-MPI_Barrier(MPI_COMM_WORLD);
+//MPI_Barrier(MPI_COMM_WORLD);
 
 if (!id)
 for (k=0;k<p;k++)
